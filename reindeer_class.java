@@ -1,8 +1,10 @@
 public  class Reindeer implements Runnable {
 
     private Works works;
+    private int id;
 
-    public Reindeer(Works works) {
+    public Reindeer(int id, Works works) {
+        this.id = id;
         this.works = works;
     }
 
@@ -10,6 +12,7 @@ public  class Reindeer implements Runnable {
     public void run() {
         while (true) {
             works.reindeer();
+            Sleep.nap(4);
         }
     }
 }
