@@ -85,8 +85,7 @@ public class Works{
 
         }
         mutex.release();
-        getHelp();    //////çalıştı This is elve 1
-
+        getHelp();    
         Sleep.nap(2);
         try {
             mutex.acquire();
