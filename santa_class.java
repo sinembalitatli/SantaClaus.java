@@ -10,6 +10,7 @@ public  class SantaClaus  implements Runnable {
     public void run() {
         while (true) {
             works.santaclaus();
+            Sleep.nap(4);
         }
     }
 
