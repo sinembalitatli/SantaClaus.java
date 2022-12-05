@@ -12,14 +12,14 @@ public class Works{
 
     public Works(){
         this.elfCount = 0;
-       this. reindeerCount = 0;
+        this. reindeerCount = 0;
 
-       this. santaSem = new Semaphore(0);
-       this. reindeerSem = new Semaphore(0);
+        this. santaSem = new Semaphore(0);
+        this. reindeerSem = new Semaphore(0);
         this.elfSem = new Semaphore(0);
 
         this.mutex = new Semaphore(1);
-      this.  elfMutex = new Semaphore(1);
+        this.  elfMutex = new Semaphore(1);
 
     }
 
@@ -35,36 +35,36 @@ public class Works{
 
     }
 
-     public  void getHelp(){
-         System.out.println("This is elve"+ elfCount);
-     }
-     public void santaclaus(){
-         try {
-             santaSem.acquire();
-         } catch (InterruptedException e) {
-             e.printStackTrace();
-         }
+    public  void getHelp(){
+        System.out.println("This is elve "+ elfCount);
+    }
+    public void santaclaus(){
+        try {
+            santaSem.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-         try {
-             mutex.acquire();
-         } catch (InterruptedException e) {
-             e.printStackTrace();
-         }
+        try {
+            mutex.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
-         if (reindeerCount>= 9) {
-             prepareSleigh();
-             for (int i=0;i<=9;i++) {
-                 reindeerSem.release(9);
-                 reindeerCount -= 9;
-                 Sleep.nap(4);
-             }
-         }else if (elfCount == 3) {
-             helpElves();
-         }
-         mutex.release();
+        if (reindeerCount>= 9) {
+            prepareSleigh();
+            for (int i=0;i<9;i++) {
+                reindeerSem.release();
+                reindeerCount--;
+                Sleep.nap(2);
+            }
+        }else if (elfCount == 3) {
+            helpElves();
+        }
+        mutex.release();
 
-     }
+    }
     public void elves(){
         try {
             elfMutex.acquire();
@@ -85,9 +85,9 @@ public class Works{
 
         }
         mutex.release();
-        getHelp();
+        getHelp();    //////çalıştı This is elve 1
 
-        Sleep.nap();
+        Sleep.nap(2);
         try {
             mutex.acquire();
         } catch (InterruptedException e) {
@@ -100,31 +100,32 @@ public class Works{
 
         }
         mutex.release();
-        System.out.println("Elve"+ elfCount+ "at work");
+        System.out.println("Elve "+ elfCount+ " at work");
 
     }
 
-   public void reindeer(){
-       try {
-           mutex.acquire();
-       } catch (InterruptedException e) {
-           e.printStackTrace();
-       }
-       reindeerCount++;
-       if (reindeerCount == 9) {
-           santaSem.release();
-       }
-       mutex.release();
-       getHitched();
-       System.out.println("Reindeer"+ reindeerCount+"getting hitched");
-       try {
-           reindeerSem.acquire();
-       } catch (InterruptedException e) {
-           e.printStackTrace();
-       }
+    public void reindeer(){
+        try {
+            mutex.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        reindeerCount++;
+        System.out.println("Reindeer "+ reindeerCount+" getting hitched *");
+        if (reindeerCount == 9) {
+            santaSem.release();
+        }
+        mutex.release();
+        getHitched();
 
-       Sleep.nap();
-   }
+        try {
+            reindeerSem.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Sleep.nap(2);
+    }
 
 
 
